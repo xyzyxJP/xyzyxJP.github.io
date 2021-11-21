@@ -109,7 +109,7 @@
 
                 function BinaryStringToArray(text) {
                     var array = [];
-                    var tempLine = Encoding.codeToString(Encoding.convert(StringToArray(text), "UNICODE", Encoding.detect(StringToArray(text)))).split("\n");
+                    var tempLine = Encoding.codeToString(Encoding.convert(StringToArray(text), "UNICODE")).split("\n");
                     for (var i = 0; i < tempLine.length; ++i) {
                         array[i] = tempLine[i].split(",");
                     }
