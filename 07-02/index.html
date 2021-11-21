@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ja" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href=https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta name="theme-color" content="#7952b3">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <title>プログラミング レポート課題7 発展課題 Step5</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="encoding.js"></script>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+        <div class="container">
+            <h1 class="mt-0">Rp7 Step5</h1>
+            <a href="#ReferencePage">参考ページ</a>
+            <a href="#QuoteData">引用データ</a>
+
+            <div class="mb-3">
+                <label for="InputFile" class="form-label">CSVファイルを参照/選択してください</label>
+                <div class="row">
+                    <div class="col">
+                        <input class="form-control" type="file" id="InputFile">
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" id="FileButton">表示</button>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" id="SelectFile">
+                            <option selected></option>
+                            <option value="221309_hamamatsu_covid19_vaccination_mass_inoculation_venue.csv">
+                                新型コロナウイルスワクチン集団接種会場</option>
+                            <option value="221309_hamamatsu_covid19_vaccination_medical_institution.csv">
+                                新型コロナウイルスワクチン接種医療機関</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" id="SelectButton">表示</button>
+                        <button type="button" class="btn btn-danger" id="ClearButton">削除</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="UseHeader">
+                <label class="form-check-label" for="UseHeader">
+                    ヘッダー行を読み込む
+                </label>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <label for="NameIndex" class="form-label">表示名の列番号を入力してください</label>
+                            <input type="number" class="form-control" id="NameIndex" value="0">
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <label for="LatitudeIndex" class="form-label">緯度の列番号を入力してください</label>
+                            <input type="number" class="form-control" id="LatitudeIndex" value="0">
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <label for="LongitudeIndex" class="form-label">経度の列番号を入力してください</label>
+                            <input type="number" class="form-control" id="LongitudeIndex" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="map" class="mt-3 mb-3" style="width: 100%; height: 60vh"></div>
+            <script>
+                var map = L.map("map").setView([34.710275, 137.727416], 11);
+                var tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                    attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+                    maxZoom: 19
+                });
+                tileLayer.addTo(map);
+                var markerLayer = L.layerGroup().addTo(map);
+
+                function StringToArray(text) {
+                    var array = [];
+                    for (var i = 0; i < text.length; i++) {
+                        array.push(text.charCodeAt(i));
+                    }
+                    return array;
+                }
+
+                function BinaryStringToArray(text) {
+                    var array = [];
+                    var tempLine = Encoding.codeToString(Encoding.convert(StringToArray(text), "UNICODE", "SJIS")).split("\n");
+                    for (var i = 0; i < tempLine.length; ++i) {
+                        array[i] = tempLine[i].split(",");
+                    }
+                    return array;
+                }
+
+                function ArrayToMark(array) {
+                    var geojsonFeature = [];
+                    var nameIndex = document.getElementById("NameIndex").value;
+                    var latitudeIndex = document.getElementById("LatitudeIndex").value;
+                    var longitudeIndex = document.getElementById("LongitudeIndex").value;
+                    var isHeader = true;
+                    array.forEach(function (item) {
+                        if (!(!document.getElementById("UseHeader").checked && isHeader)) {
+                            if (!isNaN(parseFloat(item[latitudeIndex])) && !isNaN(parseFloat(item[longitudeIndex]))) {
+                                geojsonFeature.push({
+                                    "type": "Feature",
+                                    "properties": {
+                                        "popupContent": item[nameIndex]
+                                    },
+                                    "geometry": {
+                                        "type": "Point",
+                                        "coordinates": [parseFloat(item[longitudeIndex]), parseFloat(item[latitudeIndex])]
+                                    }
+                                });
+                            }
+                        }
+                        isHeader = false;
+                    });
+                    markerLayer.clearLayers();
+                    L.geoJson(geojsonFeature,
+                        {
+                            onEachFeature: function (feature, layer) {
+                                if (feature.properties && feature.properties.popupContent) {
+                                    layer.bindPopup(feature.properties.popupContent);
+                                }
+                            }
+                        }).addTo(markerLayer);
+                }
+
+                function ArrayToTable(array) {
+                    var table = document.getElementById("CsvTable");
+                    var nameIndex = document.getElementById("NameIndex").value;
+                    var latitudeIndex = document.getElementById("LatitudeIndex").value;
+                    var longitudeIndex = document.getElementById("LongitudeIndex").value;
+                    if (table.getElementsByTagName("thead").length != 0) {
+                        table.getElementsByTagName("thead")[0].remove();
+                    }
+                    if (table.getElementsByTagName("tbody").length != 0) {
+                        table.getElementsByTagName("tbody")[0].remove();
+                    }
+                    if (!document.getElementById("UseHeader").checked) {
+                        var thead = document.createElement("thead");
+                        var theadTr = document.createElement("tr");
+                        var index = 0;
+                        array[0].forEach(function (item) {
+                            var theadTrTh = document.createElement("th");
+                            theadTrTh.appendChild(document.createTextNode(item));
+                            theadTrTh.setAttribute("scope", "col");
+                            if (index == nameIndex || index == latitudeIndex || index == longitudeIndex) {
+                                theadTrTh.setAttribute("class", "table-primary");
+                            }
+                            theadTr.appendChild(theadTrTh);
+                            index++;
+                        })
+                        thead.appendChild(theadTr);
+                        table.appendChild(thead);
+                    }
+                    var tbody = document.createElement("tbody");
+                    var isHeader = true;
+                    array.forEach(function (item) {
+                        if (!(!document.getElementById("UseHeader").checked && isHeader)) {
+                            var tbodyTr = document.createElement("tr");
+                            var index = 0;
+                            item.forEach(function (value) {
+                                var tbodyTrTd = document.createElement("td");
+                                tbodyTrTd.appendChild(document.createTextNode(value));
+                                if (index == nameIndex || index == latitudeIndex || index == longitudeIndex) {
+                                    tbodyTrTd.setAttribute("class", "table-primary");
+                                }
+                                tbodyTr.appendChild(tbodyTrTd);
+                                index++;
+                            });
+                            tbody.appendChild(tbodyTr);
+                        }
+                        isHeader = false;
+                    });
+                    table.appendChild(tbody);
+                }
+
+                var loadArray = null;
+
+                document.getElementById("InputFile").addEventListener("change", function () {
+                    var fileReader = new FileReader();
+                    fileReader.readAsBinaryString(document.getElementById("InputFile").files[0]);
+                    fileReader.addEventListener("load", function () {
+                        switch (document.getElementById("InputFile").files[0].name) {
+                            case "221309_hamamatsu_covid19_vaccination_mass_inoculation_venue.csv":
+                                document.getElementById("UseHeader").checked = false;
+                                document.getElementById("NameIndex").value = 2;
+                                document.getElementById("LatitudeIndex").value = 7;
+                                document.getElementById("LongitudeIndex").value = 8;
+                                break;
+                            case "221309_hamamatsu_covid19_vaccination_medical_institution.csv":
+                                document.getElementById("UseHeader").checked = false;
+                                document.getElementById("NameIndex").value = 4;
+                                document.getElementById("LatitudeIndex").value = 11;
+                                document.getElementById("LongitudeIndex").value = 12;
+                                break;
+                        };
+                        loadArray = BinaryStringToArray(fileReader.result);
+                    });
+                });
+
+                document.getElementById("ClearButton").addEventListener("click", function () {
+                    markerLayer.clearLayers();
+                });
+
+                document.getElementById("FileButton").addEventListener("click", function () {
+                    if (loadArray != null) {
+                        ArrayToMark(loadArray);
+                        ArrayToTable(loadArray);
+                    }
+                });
+
+                document.getElementById("SelectButton").addEventListener("click", function () {
+                    if (document.getElementById("SelectFile").value != "") {
+                        var xmlHttpRequest = new XMLHttpRequest();
+                        xmlHttpRequest.open("get", "data/" + document.getElementById("SelectFile").value, true);
+                        xmlHttpRequest.send(null);
+                        xmlHttpRequest.onload = function () {
+                            loadArray = [];
+                            var tempLine = xmlHttpRequest.responseText.split("\n");
+                            for (var i = 0; i < tempLine.length; ++i) {
+                                loadArray[i] = tempLine[i].split(",");
+                            }
+                            ArrayToMark(loadArray);
+                            ArrayToTable(loadArray);
+                        }
+                    }
+                })
+
+            </script>
+            <table class="table mt-3 mb-5" id="CsvTable">
+            </table>
+            <p class="lead" id="ReferencePage">参考ページ</p>
+            <table class="table mt-3 mb-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">サイト名</th>
+                        <th scope="col">ページ名</th>
+                        <th scope="col">ページURL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>@s_fujii(株式会社アイエンター)</td>
+                        <td>LeafletでOpenStreetMapを表示してみる</td>
+                        <td><a
+                                href="https://qiita.com/s_fujii/items/adbe3b35cd350e23d08d">https://qiita.com/s_fujii/items/adbe3b35cd350e23d08d</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>ITSakura</td>
+                        <td>JavaScript 要素を追加/削除する(createElement他)</td>
+                        <td><a href="https://itsakura.com/js-createelement">https://itsakura.com/js-createelement</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="lead" id="QuoteData">引用データ</p>
+            <table class="table mt-3 mb-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">データ名</th>
+                        <th scope="col">ファイル名</th>
+                        <th scope="col">ページURL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>新型コロナウイルスワクチン集団接種会場</td>
+                        <td>221309_hamamatsu_covid19_vaccination_mass_inoculation_venue.csv</td>
+                        <td><a
+                                href="https://opendata.pref.shizuoka.jp/dataset/8652.html">https://opendata.pref.shizuoka.jp/dataset/8652.html</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>新型コロナウイルスワクチン接種医療機関</td>
+                        <td>221309_hamamatsu_covid19_vaccination_medical_institution.csv</td>
+                        <td><a
+                                href="https://opendata.pref.shizuoka.jp/dataset/8635.html">https://opendata.pref.shizuoka.jp/dataset/8635.html</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">70110043 佐橋優人</span>
+        </div>
+    </footer>
+</body>
+
+</html>
