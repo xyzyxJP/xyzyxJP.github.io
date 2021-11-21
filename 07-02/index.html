@@ -235,6 +235,23 @@
                     }
                 });
 
+                document.getElementById("SelectFile").addEventListener("change", function () {
+                    switch (document.getElementById("SelectFile").value) {
+                        case "221309_hamamatsu_covid19_vaccination_mass_inoculation_venue.csv":
+                            document.getElementById("UseHeader").checked = false;
+                            document.getElementById("NameIndex").value = 2;
+                            document.getElementById("LatitudeIndex").value = 7;
+                            document.getElementById("LongitudeIndex").value = 8;
+                            break;
+                        case "221309_hamamatsu_covid19_vaccination_medical_institution.csv":
+                            document.getElementById("UseHeader").checked = false;
+                            document.getElementById("NameIndex").value = 4;
+                            document.getElementById("LatitudeIndex").value = 11;
+                            document.getElementById("LongitudeIndex").value = 12;
+                            break;
+                    };
+                });
+
                 document.getElementById("SelectButton").addEventListener("click", function () {
                     if (document.getElementById("SelectFile").value != "") {
                         var xmlHttpRequest = new XMLHttpRequest();
