@@ -226,6 +226,13 @@
 
                 document.getElementById("ClearButton").addEventListener("click", function () {
                     markerLayer.clearLayers();
+                    var table = document.getElementById("CsvTable");
+                    if (table.getElementsByTagName("thead").length != 0) {
+                        table.getElementsByTagName("thead")[0].remove();
+                    }
+                    if (table.getElementsByTagName("tbody").length != 0) {
+                        table.getElementsByTagName("tbody")[0].remove();
+                    }
                 });
 
                 document.getElementById("FileButton").addEventListener("click", function () {
