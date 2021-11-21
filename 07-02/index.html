@@ -103,18 +103,11 @@
                 });
                 tileLayer.addTo(map);
                 var markerLayer = L.layerGroup().addTo(map);
+                var loadArray = null;
 
                 function StringToArray(text) {
                     var array = [];
-                    for (var i = 0; i < text.length; i++) {
-                        array.push(text.charCodeAt(i));
-                    }
-                    return array;
-                }
-
-                function BinaryStringToArray(text) {
-                    var array = [];
-                    var tempLine = Encoding.codeToString(Encoding.convert(StringToArray(text), "UNICODE")).split("\n");
+                    var tempLine = Encoding.convert(text, { to: "UNICODE", from: "AUTO", type: "string" }).split("\n");
                     for (var i = 0; i < tempLine.length; ++i) {
                         array[i] = tempLine[i].split(",");
                     }
@@ -205,7 +198,34 @@
                     table.appendChild(tbody);
                 }
 
-                var loadArray = null;
+
+                document.getElementById("SelectFile").addEventListener("change", function () {
+                    switch (document.getElementById("SelectFile").value) {
+                        case "221309_hamamatsu_covid19_vaccination_mass_inoculation_venue.csv":
+                            document.getElementById("UseHeader").checked = false;
+                            document.getElementById("NameIndex").value = 3;
+                            document.getElementById("LatitudeIndex").value = 7;
+                            document.getElementById("LongitudeIndex").value = 8;
+                            break;
+                        case "221309_hamamatsu_covid19_vaccination_medical_institution.csv":
+                            document.getElementById("UseHeader").checked = false;
+                            document.getElementById("NameIndex").value = 4;
+                            document.getElementById("LatitudeIndex").value = 11;
+                            document.getElementById("LongitudeIndex").value = 12;
+                            break;
+                    };
+                });
+
+                document.getElementById("ClearButton").addEventListener("click", function () {
+                    markerLayer.clearLayers();
+                    var table = document.getElementById("CsvTable");
+                    if (table.getElementsByTagName("thead").length != 0) {
+                        table.getElementsByTagName("thead")[0].remove();
+                    }
+                    if (table.getElementsByTagName("tbody").length != 0) {
+                        table.getElementsByTagName("tbody")[0].remove();
+                    }
+                });
 
                 document.getElementById("InputFile").addEventListener("change", function () {
                     var fileReader = new FileReader();
@@ -225,19 +245,8 @@
                                 document.getElementById("LongitudeIndex").value = 12;
                                 break;
                         };
-                        loadArray = BinaryStringToArray(fileReader.result);
+                        loadArray = StringToArray(fileReader.result);
                     });
-                });
-
-                document.getElementById("ClearButton").addEventListener("click", function () {
-                    markerLayer.clearLayers();
-                    var table = document.getElementById("CsvTable");
-                    if (table.getElementsByTagName("thead").length != 0) {
-                        table.getElementsByTagName("thead")[0].remove();
-                    }
-                    if (table.getElementsByTagName("tbody").length != 0) {
-                        table.getElementsByTagName("tbody")[0].remove();
-                    }
                 });
 
                 document.getElementById("FileButton").addEventListener("click", function () {
@@ -247,34 +256,13 @@
                     }
                 });
 
-                document.getElementById("SelectFile").addEventListener("change", function () {
-                    switch (document.getElementById("SelectFile").value) {
-                        case "221309_hamamatsu_covid19_vaccination_mass_inoculation_venue.csv":
-                            document.getElementById("UseHeader").checked = false;
-                            document.getElementById("NameIndex").value = 3;
-                            document.getElementById("LatitudeIndex").value = 7;
-                            document.getElementById("LongitudeIndex").value = 8;
-                            break;
-                        case "221309_hamamatsu_covid19_vaccination_medical_institution.csv":
-                            document.getElementById("UseHeader").checked = false;
-                            document.getElementById("NameIndex").value = 4;
-                            document.getElementById("LatitudeIndex").value = 11;
-                            document.getElementById("LongitudeIndex").value = 12;
-                            break;
-                    };
-                });
-
                 document.getElementById("SelectButton").addEventListener("click", function () {
                     if (document.getElementById("SelectFile").value != "") {
                         var xmlHttpRequest = new XMLHttpRequest();
                         xmlHttpRequest.open("get", "data/" + document.getElementById("SelectFile").value, true);
                         xmlHttpRequest.send(null);
                         xmlHttpRequest.onload = function () {
-                            loadArray = [];
-                            var tempLine = xmlHttpRequest.responseText.split("\n");
-                            for (var i = 0; i < tempLine.length; ++i) {
-                                loadArray[i] = tempLine[i].split(",");
-                            }
+                            loadArray = StringToArray(xmlHttpRequest.responseText);
                             ArrayToMark(loadArray);
                             ArrayToTable(loadArray);
                         }
