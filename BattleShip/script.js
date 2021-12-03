@@ -1,15 +1,23 @@
 function HpArrayToTable(id, array) {
+    let sumHp = 0;
+    let count = 0;
     let table = document.getElementById(id);
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
         switch (element) {
             case 3:
+                sumHp += 3;
+                count++;
                 table.getElementsByTagName("td")[index].setAttribute("class", "table-success");
                 break;
             case 2:
+                sumHp += 2;
+                count++;
                 table.getElementsByTagName("td")[index].setAttribute("class", "table-warning");
                 break;
             case 1:
+                sumHp += 1;
+                count++;
                 table.getElementsByTagName("td")[index].setAttribute("class", "table-danger");
                 break;
             case 0:
@@ -19,7 +27,14 @@ function HpArrayToTable(id, array) {
                 table.getElementsByTagName("td")[index].setAttribute("class", "");
                 break;
         }
-
+    }
+    switch (id) {
+        case "alphaHp":
+            document.getElementById("alphaLog").innerText = "α残機 = " + count + "(総HP : " + sumHp + ")";
+            break;
+        case "bravoHp":
+            document.getElementById("bravoLog").innerText = "β残機 = " + count + "(総HP : " + sumHp + ")";
+            break;
     }
 }
 
