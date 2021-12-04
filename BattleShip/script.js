@@ -80,49 +80,100 @@ function TableRefresh() {
     IsAttackArrayToTable("bravoIsAttack", json[index][false]["isAttack"]);
     document.getElementById("alphaAlertLog").style.display = 'block';
     document.getElementById("bravoAlertLog").style.display = 'block';
-    if (json[index][true]["lastMoveVector"] === undefined) {
-        switch (json[index][true]["lastAttackResult"]) {
+
+    if (json[index][true]["lastMoveVector"] === undefined && json[index][true]["lastAttackPoint"] === undefined) {
+    } else if (json[index][true]["lastAttackPoint"] !== undefined) {
+        json[index][true]["lastAttackResult"].sort(function (a, b) {
+            if (a > b) return -1;
+            if (a < b) return 1;
+            return 0;
+        });;
+        document.getElementById("alphaAlertLog").innerText = "α攻撃 " + json[index][true]["lastAttackPoint"] + "\n";
+        switch (json[index][true]["lastAttackResult"][0]) {
             case 3:
-                document.getElementById("alphaAlertLog").innerText = "α攻撃 " + json[index][true]["lastAttackPoint"] + " 撃沈！";
+                document.getElementById("alphaAlertLog").innerText += "撃沈！";
                 document.getElementById("alphaAlertLog").setAttribute("class", "alert alert-danger");
                 break;
             case 2:
-                document.getElementById("alphaAlertLog").innerText = "α攻撃 " + json[index][true]["lastAttackPoint"] + " 命中！";
+                document.getElementById("alphaAlertLog").innerText += "命中！";
                 document.getElementById("alphaAlertLog").setAttribute("class", "alert alert-danger");
                 break;
             case 1:
-                document.getElementById("alphaAlertLog").innerText = "α攻撃 " + json[index][true]["lastAttackPoint"] + " 波高し！";
+                document.getElementById("alphaAlertLog").innerText += "波高し！";
                 document.getElementById("alphaAlertLog").setAttribute("class", "alert alert-warning");
                 break;
             case 0:
-                document.getElementById("alphaAlertLog").innerText = "α攻撃 " + json[index][true]["lastAttackPoint"] + " ハズレ！";
+                document.getElementById("alphaAlertLog").innerText += "ハズレ！";
                 document.getElementById("alphaAlertLog").setAttribute("class", "alert alert-secondary");
                 break;
         }
-    } else {
+        for (let i = 1; i < json[index][true]["lastAttackResult"].length; i++) {
+            let element = json[index][true]["lastAttackResult"][i];
+            switch (element) {
+                case 3:
+                    document.getElementById("alphaAlertLog").innerText += "\n撃沈！";
+                    break;
+                case 2:
+                    document.getElementById("alphaAlertLog").innerText += "\n命中！";
+                    break;
+                case 1:
+                    document.getElementById("alphaAlertLog").innerText += "\n波高し！";
+                    break;
+                case 0:
+                    document.getElementById("alphaAlertLog").innerText += "\nハズレ！";
+                    break;
+            }
+        }
+    } else if (json[index][true]["lastMoveVector"] !== undefined) {
         document.getElementById("alphaAlertLog").innerText = "α移動 " + json[index][true]["lastMoveVector"];
         document.getElementById("alphaAlertLog").setAttribute("class", "alert alert-success");
     }
-    if (json[index][false]["lastMoveVector"] === undefined) {
-        switch (json[index][false]["lastAttackResult"]) {
+
+    if (json[index][false]["lastMoveVector"] === undefined && json[index][false]["lastAttackPoint"] === undefined) {
+    } else if (json[index][false]["lastAttackPoint"] !== undefined) {
+        document.getElementById("bravoAlertLog").innerText = "";
+        json[index][false]["lastAttackResult"].sort(function (a, b) {
+            if (a > b) return -1;
+            if (a < b) return 1;
+            return 0;
+        });;
+        document.getElementById("bravoAlertLog").innerText = "β攻撃 " + json[index][false]["lastAttackPoint"] + "\n";
+        switch (json[index][false]["lastAttackResult"][0]) {
             case 3:
-                document.getElementById("bravoAlertLog").innerText = "β攻撃 " + json[index][false]["lastAttackPoint"] + " 撃沈！";
+                document.getElementById("bravoAlertLog").innerText += "撃沈！";
                 document.getElementById("bravoAlertLog").setAttribute("class", "alert alert-danger");
                 break;
             case 2:
-                document.getElementById("bravoAlertLog").innerText = "β攻撃 " + json[index][false]["lastAttackPoint"] + " 命中！";
+                document.getElementById("bravoAlertLog").innerText += "命中！";
                 document.getElementById("bravoAlertLog").setAttribute("class", "alert alert-danger");
                 break;
             case 1:
-                document.getElementById("bravoAlertLog").innerText = "β攻撃 " + json[index][false]["lastAttackPoint"] + " 波高し！";
+                document.getElementById("bravoAlertLog").innerText += "波高し！";
                 document.getElementById("bravoAlertLog").setAttribute("class", "alert alert-warning");
                 break;
             case 0:
-                document.getElementById("bravoAlertLog").innerText = "β攻撃 " + json[index][false]["lastAttackPoint"] + " ハズレ！";
+                document.getElementById("bravoAlertLog").innerText += "ハズレ！";
                 document.getElementById("bravoAlertLog").setAttribute("class", "alert alert-secondary");
                 break;
         }
-    } else {
+        for (let i = 1; i < json[index][false]["lastAttackResult"].length; i++) {
+            let element = json[index][false]["lastAttackResult"][i];
+            switch (element) {
+                case 3:
+                    document.getElementById("bravoAlertLog").innerText += "\n撃沈！";
+                    break;
+                case 2:
+                    document.getElementById("bravoAlertLog").innerText += "\n命中！";
+                    break;
+                case 1:
+                    document.getElementById("bravoAlertLog").innerText += "\n波高し！";
+                    break;
+                case 0:
+                    document.getElementById("bravoAlertLog").innerText += "\nハズレ！";
+                    break;
+            }
+        }
+    } else if (json[index][false]["lastMoveVector"] !== undefined) {
         document.getElementById("bravoAlertLog").innerText = "β移動 " + json[index][false]["lastMoveVector"];
         document.getElementById("bravoAlertLog").setAttribute("class", "alert alert-success");
     }
@@ -164,5 +215,6 @@ document.getElementById("fileInput").addEventListener('change', function () {
         json = JSON.parse(fileReader.result);
         document.getElementById("progressRange").value = 1;
         document.getElementById("progressRange").setAttribute("max", Object.keys(json).length);
+        TableRefresh();
     });
 });
