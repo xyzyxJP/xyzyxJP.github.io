@@ -177,6 +177,12 @@ function TableRefresh() {
         document.getElementById("bravoAlertLog").innerText = "β移動 " + json[index][false]["lastMoveVector"];
         document.getElementById("bravoAlertLog").setAttribute("class", "alert alert-success");
     }
+
+    if (json[index]["alphaSide"]) {
+        document.getElementById("bravoAlertLog").setAttribute("class", "alert  alert-light");
+    } else {
+        document.getElementById("alphaAlertLog").setAttribute("class", "alert  alert-light");
+    }
 }
 
 let json;
