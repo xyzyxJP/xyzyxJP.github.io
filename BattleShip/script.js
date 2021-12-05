@@ -81,6 +81,7 @@ function TableRefresh() {
     document.getElementById("alphaAlertLog").style.display = 'block';
     document.getElementById("bravoAlertLog").style.display = 'block';
 
+    document.getElementById("alphaAlertLog").innerText = "α";
     if (json[index][true]["lastMoveVector"] === undefined && json[index][true]["lastAttackPoint"] === undefined) {
     } else if (json[index][true]["lastAttackPoint"] !== undefined) {
         json[index][true]["lastAttackResult"].sort(function (a, b) {
@@ -129,9 +130,9 @@ function TableRefresh() {
         document.getElementById("alphaAlertLog").setAttribute("class", "alert alert-success");
     }
 
+    document.getElementById("bravoAlertLog").innerText = "β";
     if (json[index][false]["lastMoveVector"] === undefined && json[index][false]["lastAttackPoint"] === undefined) {
     } else if (json[index][false]["lastAttackPoint"] !== undefined) {
-        document.getElementById("bravoAlertLog").innerText = "";
         json[index][false]["lastAttackResult"].sort(function (a, b) {
             if (a > b) return -1;
             if (a < b) return 1;
