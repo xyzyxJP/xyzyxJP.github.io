@@ -30,10 +30,10 @@ function HpArrayToTable(id, array) {
     }
     switch (id) {
         case "alphaHp":
-            document.getElementById("alphaLog").innerText = "α残機 = " + count + "(総HP : " + sumHp + ")";
+            document.getElementById("alphaLog").innerText = count + " (" + sumHp + ")";
             break;
         case "bravoHp":
-            document.getElementById("bravoLog").innerText = "β残機 = " + count + "(総HP : " + sumHp + ")";
+            document.getElementById("bravoLog").innerText = count + " (" + sumHp + ")";
             break;
     }
 }
@@ -44,7 +44,12 @@ function ValueArrayToTable(id, array) {
         const element = array[index];
         switch (element) {
             default:
-                table.getElementsByTagName("td")[index].innerText = element;
+                if (element[layerIndex] === undefined) {
+                    table.getElementsByTagName("td")[index].innerText = "N/A";
+
+                } else {
+                    table.getElementsByTagName("td")[index].innerText = element[layerIndex];
+                }
                 break;
         }
 
@@ -73,10 +78,10 @@ function IsAttackArrayToTable(id, array) {
 function TableRefresh() {
     let index = document.getElementById("progressRange").value;
     HpArrayToTable("alphaHp", json[index][true]["hp"]);
-    ValueArrayToTable("alphaValue", json[index][true]["value"]);
+    ValueArrayToTable("alphaValue", json[index][true]["values"]);
     IsAttackArrayToTable("alphaIsAttack", json[index][true]["isAttack"]);
     HpArrayToTable("bravoHp", json[index][false]["hp"]);
-    ValueArrayToTable("bravoValue", json[index][false]["value"]);
+    ValueArrayToTable("bravoValue", json[index][false]["values"]);
     IsAttackArrayToTable("bravoIsAttack", json[index][false]["isAttack"]);
     document.getElementById("alphaAlertLog").style.display = 'block';
     document.getElementById("bravoAlertLog").style.display = 'block';
@@ -187,6 +192,7 @@ function TableRefresh() {
 }
 
 let json;
+let layerIndex = 0;
 
 document.getElementById("previousButton").addEventListener('click', function () {
     if (json === undefined) {
@@ -194,6 +200,7 @@ document.getElementById("previousButton").addEventListener('click', function () 
     }
     if (document.getElementById("progressRange").value !== 0) {
         document.getElementById("progressRange").value--;
+        document.getElementById("progressValue").innerText = document.getElementById("progressRange").value;
         TableRefresh();
     }
 });
@@ -204,6 +211,7 @@ document.getElementById("nextButton").addEventListener('click', function () {
     }
     if (document.getElementById("progressRange").value !== document.getElementById("progressRange").attributes["max"]) {
         document.getElementById("progressRange").value++;
+        document.getElementById("progressValue").innerText = document.getElementById("progressRange").value;
         TableRefresh();
     }
 });
@@ -212,6 +220,7 @@ document.getElementById("progressRange").addEventListener('input', function () {
     if (json === undefined) {
         return;
     }
+    document.getElementById("progressValue").innerText = document.getElementById("progressRange").value;
     TableRefresh();
 });
 
@@ -222,6 +231,31 @@ document.getElementById("fileInput").addEventListener('change', function () {
         json = JSON.parse(fileReader.result);
         document.getElementById("progressRange").value = 1;
         document.getElementById("progressRange").setAttribute("max", Object.keys(json).length);
+        layerIndex = 0;
         TableRefresh();
     });
+});
+
+document.getElementById("upperButton").addEventListener('click', function () {
+    if (json === undefined) {
+        return;
+    }
+    layerIndex++;
+    document.getElementById("layerIndex").innerText = layerIndex;
+    TableRefresh();
+});
+
+document.getElementById("layerIndex").addEventListener('click', function () {
+    layerIndex = 0;
+    document.getElementById("layerIndex").innerText = layerIndex;
+    TableRefresh();
+})
+
+document.getElementById("lowerButton").addEventListener('click', function () {
+    if (json === undefined) {
+        return;
+    }
+    layerIndex--;
+    document.getElementById("layerIndex").innerText = layerIndex;
+    TableRefresh();
 });
