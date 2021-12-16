@@ -194,24 +194,31 @@ function TableRefresh() {
 let json;
 let layerIndex = 0;
 
-document.getElementById("previousButton").addEventListener('click', function () {
+document.getElementById("progressDownButton").addEventListener('click', function () {
     if (json === undefined) {
         return;
     }
     if (document.getElementById("progressRange").value !== 0) {
         document.getElementById("progressRange").value--;
-        document.getElementById("progressValue").innerText = document.getElementById("progressRange").value;
+        document.getElementById("progressValueLabel").innerText = document.getElementById("progressRange").value;
         TableRefresh();
     }
 });
 
-document.getElementById("nextButton").addEventListener('click', function () {
+document.getElementById("progressValueLabel").addEventListener('click', function () {
+    document.getElementById("progressRange").value = 1;
+    document.getElementById("progressValueLabel").innerText = document.getElementById("progressRange").value;
+    TableRefresh();
+})
+
+
+document.getElementById("progressUpButton").addEventListener('click', function () {
     if (json === undefined) {
         return;
     }
     if (document.getElementById("progressRange").value !== document.getElementById("progressRange").attributes["max"]) {
         document.getElementById("progressRange").value++;
-        document.getElementById("progressValue").innerText = document.getElementById("progressRange").value;
+        document.getElementById("progressValueLabel").innerText = document.getElementById("progressRange").value;
         TableRefresh();
     }
 });
@@ -220,7 +227,7 @@ document.getElementById("progressRange").addEventListener('input', function () {
     if (json === undefined) {
         return;
     }
-    document.getElementById("progressValue").innerText = document.getElementById("progressRange").value;
+    document.getElementById("progressValueLabel").innerText = document.getElementById("progressRange").value;
     TableRefresh();
 });
 
@@ -236,26 +243,26 @@ document.getElementById("fileInput").addEventListener('change', function () {
     });
 });
 
-document.getElementById("upperButton").addEventListener('click', function () {
+document.getElementById("layerUpButton").addEventListener('click', function () {
     if (json === undefined) {
         return;
     }
     layerIndex++;
-    document.getElementById("layerIndex").innerText = layerIndex;
+    document.getElementById("layerIndexLabel").innerText = layerIndex;
     TableRefresh();
 });
 
-document.getElementById("layerIndex").addEventListener('click', function () {
+document.getElementById("layerIndexLabel").addEventListener('click', function () {
     layerIndex = 0;
-    document.getElementById("layerIndex").innerText = layerIndex;
+    document.getElementById("layerIndexLabel").innerText = layerIndex;
     TableRefresh();
 })
 
-document.getElementById("lowerButton").addEventListener('click', function () {
+document.getElementById("layerDownButton").addEventListener('click', function () {
     if (json === undefined) {
         return;
     }
     layerIndex--;
-    document.getElementById("layerIndex").innerText = layerIndex;
+    document.getElementById("layerIndexLabel").innerText = layerIndex;
     TableRefresh();
 });

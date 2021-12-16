@@ -46,61 +46,72 @@
                                 JsonViewer
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/xyzyxJP/BattleShip">
+                                GitHub
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <!--
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2" id="jsonViewer">JsonViewer</h1>
-                </div>
-                -->
-                <div class="mt-3 mb-3">
-                    <input type="file" class="form-control" id="fileInput">
-                </div>
-                <input type="range" class="form-range mb-3" min="1" max="1" id="progressRange">
-                <div class="btn-group p-3" role="group">
-                    <button type="button" class="btn btn-outline-danger" id="previousButton">-</button>
-                    <a class="btn btn-outline-secondary" id="progressValue">0</a>
-                    <button type="button" class="btn btn-outline-primary" id="nextButton">+</button>
+                    <h1 class="h4" id="jsonViewer">JsonViewer</h1>
                 </div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col">
+                            <input type="file" class="form-control" id="fileInput">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="btn-group p-3 d-flex" role="group">
+                                <button type="button" class="btn btn-outline-danger" id="progressDownButton">-</button>
+                                <a class="btn btn-outline-secondary" id="progressValueLabel">1</a>
+                                <button type="button" class="btn btn-outline-primary" id="progressUpButton">+</button>
+                            </div>
+                        </div>
+                        <div class="col d-flex align-items-center">
+                            <input type="range" class="form-range" min="1" max="1" id="progressRange">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <div class="alert alert-primary" id="alphaAlertLog" role="alert" style="display: none;">
                                 α
                             </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col">
                             <div class="alert alert-primary" id="bravoAlertLog" role="alert" style="display: none;">
                                 β
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col">
                             <h2 class="h4">戦艦HP</h2>
-                            <div class="btn-group p-3" role="group">
+                            <div class="btn-group p-3 d-flex" role="group" style="width: 240px">
                                 <a class="btn btn-outline-danger" id="alphaLog">4 (12)</a>
                                 <a class="btn btn-outline-primary" id="bravoLog">4 (12)</a>
                             </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col">
                             <h2 class="h4">評価値</h2>
-                            <div class="btn-group p-3" role="group">
-                                <button type="button" class="btn btn-outline-danger" id="lowerButton">-</button>
-                                <a class="btn btn-outline-secondary" id="layerIndex">0</a>
-                                <button type="button" class="btn btn-outline-primary" id="upperButton">+</button>
+                            <div class="btn-group p-3 d-flex" role="group" style="width: 240px">
+                                <button type="button" class="btn btn-outline-danger" id="layerDownButton">-</button>
+                                <a class="btn btn-outline-secondary" id="layerIndexLabel">0</a>
+                                <button type="button" class="btn btn-outline-primary" id="layerUpButton">+</button>
                             </div>
                         </div>
-                        <div class="col-sm">
+                        <div class="col">
                             <h2 class="h4">攻撃可否</h2>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col">
                             <table class="table table-bordered table-board" id="alphaHp">
                                 <thead>
                                     <tr>
@@ -156,7 +167,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-sm">
+                        <div class="col">
                             <table class="table table-bordered table-board" id="alphaValue">
                                 <thead>
                                     <tr>
@@ -212,7 +223,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-sm">
+                        <div class="col">
                             <table class="table table-bordered table-board" id="alphaIsAttack">
                                 <thead>
                                     <tr>
@@ -440,7 +451,6 @@
                         </div>
                     </div>
                 </div>
-
             </main>
         </div>
     </div>
