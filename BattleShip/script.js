@@ -56,7 +56,7 @@ function ValueArrayToTable(id, array) {
     }
 }
 
-function IsAttackArrayToTable(id, array) {
+function EnableAttacksArrayToTable(id, array) {
     let table = document.getElementById(id);
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
@@ -79,10 +79,10 @@ function TableRefresh() {
     let index = document.getElementById("progressRange").value;
     HpArrayToTable("alphaHp", json[index][true]["hp"]);
     ValueArrayToTable("alphaValue", json[index][true]["values"]);
-    IsAttackArrayToTable("alphaIsAttack", json[index][true]["isAttack"]);
+    EnableAttacksArrayToTable("alphaEnableAttack", json[index][true]["enableAttack"]);
     HpArrayToTable("bravoHp", json[index][false]["hp"]);
     ValueArrayToTable("bravoValue", json[index][false]["values"]);
-    IsAttackArrayToTable("bravoIsAttack", json[index][false]["isAttack"]);
+    EnableAttacksArrayToTable("bravoEnableAttack", json[index][false]["enableAttack"]);
     document.getElementById("alphaAlertLog").style.display = 'block';
     document.getElementById("bravoAlertLog").style.display = 'block';
 
