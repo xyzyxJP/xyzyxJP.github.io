@@ -237,6 +237,7 @@ document.getElementById("fileInput").addEventListener('change', function () {
     fileReader.addEventListener("load", function () {
         json = JSON.parse(fileReader.result);
         document.getElementById("progressRange").value = 1;
+        document.getElementById("progressValueLabel").innerText = document.getElementById("progressRange").value;
         document.getElementById("progressRange").setAttribute("max", Object.keys(json).length);
         layerIndex = 0;
         TableRefresh();
