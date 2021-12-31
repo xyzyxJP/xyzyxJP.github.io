@@ -46,8 +46,23 @@ function ValueArrayToTable(id, array) {
             default:
                 if (element[layerIndex] === undefined) {
                     table.getElementsByTagName("td")[index].innerText = "N/A";
-
                 } else {
+                    switch (element[layerIndex]) {
+                        case -2:
+                            table.getElementsByTagName("td")[index].setAttribute("class", "table-dark");
+                            break;
+                        case -1:
+                            table.getElementsByTagName("td")[index].setAttribute("class", "table-secondary");
+                            break;
+                        default:
+                            table.getElementsByTagName("td")[index].setAttribute("class", "");
+                            break;
+                    }
+                    if (0 < element[layerIndex] && element[layerIndex] < 10) {
+                        table.getElementsByTagName("td")[index].setAttribute("class", "table-warning");
+                    } else if (10 <= element[layerIndex]) {
+                        table.getElementsByTagName("td")[index].setAttribute("class", "table-danger");
+                    }
                     table.getElementsByTagName("td")[index].innerText = element[layerIndex];
                 }
                 break;
