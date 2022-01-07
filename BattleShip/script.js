@@ -46,6 +46,7 @@ function ValueArrayToTable(id, array) {
             default:
                 if (element[layerIndex] === undefined) {
                     table.getElementsByTagName("td")[index].innerText = "N/A";
+                    table.getElementsByTagName("td")[index].setAttribute("class", "");
                 } else {
                     switch (element[layerIndex]) {
                         case -2:
