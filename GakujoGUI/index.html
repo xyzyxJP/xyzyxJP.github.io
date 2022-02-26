@@ -9,7 +9,7 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.ico" rel="icon">
 
   <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -44,11 +44,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="https://github.com/xyzyxJP/GakujoGUI">Download</a></li>
+          <li><a class="getstarted scrollto" href="https://github.com/xyzyxJP/GakujoGUI-WPF">Download</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -77,40 +73,6 @@
 
   <main id="main">
 
-    <section id="clients" class="clients clients">
-      <div class="container">
-
-        <div class="row" hidden>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-1.png" class="img-fluid" alt="" data-aos="zoom-in">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-2.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="100">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-3.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="200">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-4.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="300">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-5.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="400">
-          </div>
-
-          <div class="col-lg-2 col-md-4 col-6">
-            <img src="assets/img/clients/client-6.png" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="500">
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
     <section id="about" class="about">
       <div class="container">
 
@@ -120,69 +82,23 @@
 
         <div class="row content">
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="150">
-            <p>
-              学務情報システム上の操作をソフトウェア上で行うことができるツール
-            </p>
             <ul>
-              <li><i class="ri-check-double-line"></i> メンテナンス・サーバーダウン中でも、保存した情報を表示</li>
-              <li><i class="ri-check-double-line"></i> 保存した授業連絡などは読み込み無しで連絡内容を表示</li>
-              <li><i class="ri-check-double-line"></i> レポート・小テストの提出状態もワンクリックで更新</li>
-              <li><i class="ri-check-double-line"></i> ツールを閉じたあとも、高速ログインが可能</li>
+              <li>✅ 学務情報システムのアプリケーション</li>
+              <li>💾 オフライン起動可能なローカル保存</li>
+              <li>🚧 メンテナンス / サーバーダウン時に閲覧可能 (事前に更新したデータに限る)</li>
+              <li>🕰️ 読み込み時間を大幅短縮</li>
+              <li>📅 時間割に未提出の課題を強調表示</li>
             </ul>
           </div>
-          <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-up" data-aos-delay="300">
-            <p>
-              授業連絡を読み込むのに数秒間もかかり、戻るボタン・更新ボタンを押しただけでエラーが表示され再ログインする必要がある使いづらい学務情報システムを使いやすくしようという考えから生まれたのが、“GakujoGUI”
-              です
-            </p>
-            <a href="https://github.com/xyzyxJP/GakujoGUI" class="btn-learn-more">Download</a>
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="150">
+            <ul>
+              <li>💬 授業連絡などの内容を検索可能</li>
+              <li>🔄 バックグラウンドで自動更新</li>
+              <li>🛎️ 新着通知をDiscordでお知らせ</li>
+              <li>📝 未提出の課題をTodoistで管理</li>
+              <li>🌙 ライト / ダークテーマに対応</li>
+            </ul>
           </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="services" class="services">
-      <div class="container">
-
-        <div class="section-title" data-aos="fade-up">
-          <h2>実装済みの機能</h2>
-          <p hidden>Magnam dolores commodi suscipit eius consequatur ex aliquid fug</p>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title"><a>授業連絡</a></h4>
-              <p class="description">自動でファイルダウンロードをする機能に加え、保存した連絡は読み込み無しで表示</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4 class="title"><a>レポート</a></h4>
-              <p class="description">レポートの一覧表示に加え、提出・取消が可能 (コメント機能は実装予定)</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
-              <div class="icon"><i class="bx bx-clipboard"></i></div>
-              <h4 class="title"><a>小テスト</a></h4>
-              <p class="description">小テストの一覧表示に加え、問題の確認から提出・取消が可能</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
-              <div class="icon"><i class="bx bx-world"></i></div>
-              <h4 class="title"><a>教務システム</a></h4>
-              <p class="description">成績情報をワンクリックで表示に加え、シラバスを一覧・詳細の分割表示が可能</p>
-            </div>
-          </div>
-
         </div>
 
       </div>
@@ -192,57 +108,58 @@
       <div class="container">
 
         <div class="section-title" data-aos="fade-up">
-          <h2>追加予定の機能</h2>
-          <p hidden>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
+          <h2>実装済みの機能</h2>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="300">
-          <div class="col-lg-3 col-md-4">
+          <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
-              <i class="ri-list-ordered" style="color: #ffbb2c;"></i>
-              <h3><a>抽選履修登録・結果</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-            <div class="icon-box">
-              <i class="ri-list-check" style="color: #5578ff;"></i>
-              <h3><a>一般講義履修登録</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-            <div class="icon-box">
-              <i class="ri-calendar-2-line" style="color: #e80368;"></i>
-              <h3><a>個人時間割</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
-            <div class="icon-box">
-              <i class="ri-notification-2-line" style="color: #e361ff;"></i>
-              <h3><a>新着連絡通知</a></h3>
+              <h3><a>💬 授業連絡</a></h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
-              <i class="ri-calendar-todo-line " style="color: #47aeff;"></i>
-              <h3><a>カレンダー連携</a></h3>
+              <h3><a>📈 レポート</a></h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
-              <i class="ri-todo-line " style="color: #ffa76e;"></i>
-              <h3><a>ToDoリスト連携</a></h3>
+              <h3><a>📝 小テスト</a></h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
-              <i class="ri-refresh-line " style="color: #11dbcf;"></i>
-              <h3><a>リアルタイム更新</a></h3>
+              <h3><a>🗃️ 授業共有ファイル</a></h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
-              <i class="ri-smartphone-line" style="color: #4233ff;"></i>
-              <h3><a>スマホ版公開</a></h3>
+              <h3><a>🎓 成績情報</a></h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 mt-4">
+            <div class="icon-box">
+              <h3><a>📅 個人時間割</a></h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 mt-4">
+            <div class="icon-box">
+              <h3><a>🔔 新着通知</a></h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 mt-4">
+            <div class="icon-box">
+              <h3><a>🔔 Discord連携</a></h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 mt-4">
+            <div class="icon-box">
+              <h3><a>📇 Todoist連携</a></h3>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 mt-4">
+            <div class="icon-box">
+              <h3><a>🔄 自動更新</a></h3>
             </div>
           </div>
         </div>
@@ -264,7 +181,7 @@
           </div>
           <div class="col-lg-7">
             <p>
-              Windows 10 のみとなっています Linux や Mac の開発予定はありません
+              Windows 10 のみです
             </p>
           </div>
         </div>
@@ -276,7 +193,7 @@
           </div>
           <div class="col-lg-7">
             <p>
-              クッキーやトークン、パスワードはローカル内に保存されるため、ブラウザ上でログインするのと同等のセキュリティです
+              全てのデータはローカル内に保存され，外部にアップロードされることはありません
             </p>
           </div>
         </div>
@@ -288,7 +205,7 @@
           </div>
           <div class="col-lg-7">
             <p>
-              ブラウザ上でログインするのと違い、余分な画像ファイルなどを読み込まないため、サーバー負荷や読み込み時間は減ります
+              CSS，画像ファイルなどを取得しないため，ブラウザ上のログインより負荷は少ないです
             </p>
           </div>
         </div>
@@ -301,7 +218,7 @@
           <div class="col-lg-7">
             <p>
               オープンソースソフトウェアであるため、ソースコードを確認することができます<br><a
-                href="https://github.com/xyzyxJP/GakujoGUI">xyzyxJP/GakujoGUI</a>
+                href="https://github.com/xyzyxJP/GakujoGUI-WPF">xyzyxJP/GakujoGUI-WPF</a>
             </p>
           </div>
         </div>
@@ -309,11 +226,11 @@
         <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="500">
           <div class="col-lg-5">
             <i class="ri-question-line"></i>
-            <h4>開発に携わりたい !</h4>
+            <h4>不具合を見つけました !</h4>
           </div>
           <div class="col-lg-7">
             <p>
-              GitHubに載っている連絡先、もしくはTwitterのDMで連絡をお願いします
+              下記リンクより報告をお願いいたします<br><a href="https://github.com/xyzyxJP/GakujoGUI-WPF/issues/new">Issues</a>
             </p>
           </div>
         </div>
@@ -360,14 +277,6 @@
             <br>
             Googleアナリティクスを利用しています トラフィックデータの収集のためにクッキーを使用しており、匿名で収集されており、個人を特定するものではありません。
           </div>
-        </div>
-        <div class="col-lg-6">
-          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
-            <a href="#hero" class="scrollto">Home</a>
-            <a href="#about" class="scrollto">About</a>
-            <a href="#services" class="scrollto">Services</a>
-            <a href="#contact" class="scrollto">Contact</a>
-          </nav>
         </div>
       </div>
     </div>
